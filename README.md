@@ -38,3 +38,13 @@ Based on [mkhmtolzhas' rice](https://github.com/mkhmtolzhas/Invincible-Dots).
 
 ## TODO
 - Improve Hyprlock UI
+
+
+## Optional
+Mostly just personal notes in case I switch over to another PC
+- Use [MineGrub](https://github.com/Lxtharia/minegrub-world-sel-theme) theme for Grub
+- Modify `/etc/default/grub`
+  - `GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet rd.udev.log_level=3 systemd.show_status=auto vt.global_cursor_default=0 nvidia_drm.modeset=1 nvidia_drm.fbdev=1 pci=noaer pcie_aspm=off nvme_core.default_ps_max_latency_us=0 nvidia.NVreg_EnableS0ixPowerManagement=1 intel_pstate=active i915.modeset=1 i915.enable_fbc=1 mitigations=off"`
+  - `GRUB_DISABLE_OS_PROBER=false`
+- Modify `/etc/mkinitcpio.conf` (MODULES for GPU and HOOKS for `plymouth` after `base udev`)
+- Use `plymouth` and `greetd` `nwg-hello)`
