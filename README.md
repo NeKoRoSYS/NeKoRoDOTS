@@ -8,6 +8,7 @@ Based on [mkhmtolzhas' rice](https://github.com/mkhmtolzhas/Invincible-Dots).
   - and finally, `bash install.sh` to install the dotfiles.
 - Advanced wallpaper handling
   - Supports both image (via swww) and video (via mpvpaper) formats
+    - mpvpaper automatically stops if an app is on fullscreen mode to save CPU, RAM, or GPU space
   - Border colors and UI elements have dynamic color schemes
 - Familiar waybar setup
   - Built to feel like a windows taskbar, but with a sleek and straightforward UI/UX design
