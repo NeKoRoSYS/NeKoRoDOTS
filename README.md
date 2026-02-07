@@ -42,7 +42,7 @@ Based on [mkhmtolzhas' rice](https://github.com/mkhmtolzhas/Invincible-Dots).
 
 ## Optional
 Mostly just personal notes in case I switch over to another PC.
-- Use [MineGrub](https://github.com/Lxtharia/minegrub-world-sel-theme) theme for Grub
+- Use [MineGrub](https://github.com/Lxtharia/minegrub-world-sel-theme) theme for Grub.
 - Identify GPU names.
 - `/etc/modprobe.d/nvidia.conf`
   - `options nvidia NVreg_PreserveVideoMemoryAllocations=1`
