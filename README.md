@@ -59,12 +59,13 @@ Based on [mkhmtolzhas' rice](https://github.com/mkhmtolzhas/Invincible-Dots). I 
 NeKoRoSYS's HyprDots focuses on simplicity and modularity.
 
 - **One-tap Installer Script**
-  - use `git clone https://github.com/NeKoRoSYS/NeKoRoSYS-Arch-Dotfiles`
-  - then `cd NeKoRoSYS-Arch-Dotfiles`
+  - Use `git clone https://github.com/NeKoRoSYS/NeKoRoSYS-Arch-Dotfiles`
+  - Then `cd NeKoRoSYS-Arch-Dotfiles`
   - and finally, `bash install.sh` to install the dotfiles.
     - You can freely customize `flatpak.txt` and `pkglist.txt` before running `install.sh`.
     - The installer assumes you already installed `base-devel`, `git`, `yay`, `flatpak`.
     - The installer assumes you have turned on mirror link downloads for `pacman`.
+    - **The installer is safe.** It backs up your pre-existing .config folders. (If you have any)
     - Don't be scared if `sed` says it can't read a file or directory in the installer. It's part of the function to replace every occurence of `/home/nekorosys` with your username and it simply cant find one at those locations.
    
 - **Window Controls**
