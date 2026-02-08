@@ -96,6 +96,8 @@ NeKoRoSYS's NecroDots focuses on simplicity and modularity.
   - Legacy
     - Simple and functional.
     - Credits to [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf) for the layout.
+  - mkhmtcore
+    - More minimal.
   - And the best part? You can add your own!
 <br>
 
