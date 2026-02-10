@@ -90,14 +90,21 @@ if [ "$MONITOR_COUNT" -gt 0 ]; then
     fi
 fi
 
-cp .face.icon ~/
-cp change-avatar.sh ~/
-
 SEARCH="/home/nekorosys"
 REPLACE="/home/$USER"
 
 echo -e "${BLUE}Replacing $SEARCH with $REPLACE in config files...${NC}"
 find "$HOME/.config" -type f -exec grep -l "$SEARCH" {} + 2>/dev/null | xargs -r sed -i "s|$SEARCH|$REPLACE|g" 2>/dev/null
+
+if [command -v "bash" >/dev/null 2>&1]; then
+    echo "bash is installed. Appending paths..."
+    grep -v -x -f ~/.bashrc .bashrc >> ~/.bashrc
+fi
+
+cp -r .p10k.zsh ~/
+
+cp .face.icon ~/
+cp change-avatar.sh ~/
 
 echo -e "${BLUE}Setting script permissions...${NC}"
 find ~/.config/hypr/scripts -name "*.sh" -exec chmod +x {} + 2>/dev/null
