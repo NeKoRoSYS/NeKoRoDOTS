@@ -107,11 +107,6 @@
       "paddingLeft": 2,
       "symbol": "circle",
     },
-    "break",
-    {
-        "type": "custom",
-        "format": "Prompt: {}",
-        "command": "zsh ~/.config/fastfetch/p10k-render.zsh"
-    }
+    "break"
   ],
 }
