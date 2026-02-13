@@ -78,7 +78,7 @@ NeKoRoDOTS focuses on simplicity and modularity.
   - Clipboard history via `cliphist`.
  
 - **Notificications Handling**
-  - Has a dedicated notification center with customizable buttons and options.
+  - Uses `SwayNC` for a dedicated notification center with customizable buttons and options.
 
 - **Advanced Customization**
   - **Dark and Light Mode**
@@ -121,8 +121,8 @@ NeKoRoDOTS focuses on simplicity and modularity.
 > `start-dashboard.sh` creates a grid layout for a 1920x1080 display, however I also provided a 1280x720 version of the dashboard in `~/.config/hypr/windowrules.conf/`. Anyhow, if your monitor has a different resolution, my dashboard preset may not appear as intended; I recommend making your own dashboard using the same bash script.
 <br>
 
-## Skins and Layouts
-Make sure to analyze the directory structure of `~/.config/waybar/skins` and `~/.config/hypr/hyprlock/`; and how the files (`hyprlock.conf`, `config.jsonc`, `colors.css`, `style.css`, `layout.jsonc`, `modules.jsonc`) include or import from each other.
+## Desktop Customization
+Make sure to analyze the directory structure of `~/.config/waybar/skins`, `~/.config/hypr/hyprlock/`, and `~/.config/hypr/swaync/`; and how the files (`hyprlock.conf`, `config.jsonc`, `colors.css`, `style.css`, `layout.jsonc`, `modules.jsonc`) include or import from each other. That way, you can easily create more options or looks to choose from!
 
 You have two options:
 - Install someone else's Waybar/Hyprlock setup and then manually adjust its files to correctly import or include; or
