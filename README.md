@@ -1,6 +1,5 @@
 > [!TIP]
 > Please star the repo if you like the dotfiles. Thank you 🙏
-<br>
 
 # NeKoRoDOTS 
 The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek and suave.
@@ -133,6 +132,10 @@ You have two options:
 <br>
 <br>
 ![Screenshot](image-5.png) 
+<br>
+<br>
+<br>
+![Screenshot](image-6.png) 
 <br>
 <br>
 
