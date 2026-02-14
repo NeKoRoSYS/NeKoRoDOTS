@@ -81,29 +81,18 @@ NeKoRoDOTS focuses on simplicity and modularity.
   - Uses `SwayNC` for a dedicated notification center with customizable buttons and options.
 
 - **Advanced Customization**
-  - **Dark and Light Mode**
+  - Credits to [iyiolacak](https://github.com/iyiolacak/iyiolacak-swaync-config?tab=readme-ov-file), [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf), and [mkhmtolzhas](https://github.com/mkhmtolzhas/mkhmtdots) for their amazing theming.
+  - Switch to Dark and Light Mode
+  - Select Waybar Skins
+  - Select Wofi Skins
+  - Select Hyprlock Layouts
+  - Select SwayNC Styles
   - **Wallpaper Handling**
     - Supports both online (yes, online.) and offline image (via `swww`) and video (via `mpvpaper`) formats.
       - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU, RAM, or GPU space.
       - Paste image or video links with valid file extensions in the wofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
     - Border colors and UI elements have dynamic color schemes.
   - **__This repo gives you have at most 2 pre-installed out-of-the-box layouts/styling for waybar, hyprlock, and SwayNC. The best part? You can make your own!__**
-  - **Select Waybar Skins**
-    - Legacy
-      - Sleek and straightforward design.
-      - Built to feel like a Windows taskbar.
-    - mkhmtcore
-      - Modern and minimalistic.
-      - Beautiful design.
-  - **Select Hyprlock Layouts**
-    - Legacy
-      - Simple and functional.
-      - Credits to [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf) for the layout.
-    - mkhmtcore
-      - More minimal.
-  - **Select SwayNC Styles**
-    - Legacy
-      - Matches the mkhmtcore waybar skin in aesthetics.
 <br>
 
 ![Screenshot](image.png) 
