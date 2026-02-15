@@ -71,6 +71,8 @@ NeKoRoDOTS is currently being developed by one person (*cough* [Contribution](#c
 | Color Handling - Replace pywal6 with wallust | ❌ |
 | Dmenu Overhaul - Replace wofi with rofi | 🛠 |
 | Support for other distros | ⏳ |
+| Quickshell integration | 🤔 |
+| Qt and Kvantum integration | 🤔 |
 
 The following are what NeKoRoDOTS currently offers:
 - **One-tap Installer Script**
