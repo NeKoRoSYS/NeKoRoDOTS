@@ -2,6 +2,11 @@
 > Please star the repo if you like the dotfiles. Thank you 🙏
 
 # NeKoRoDOTS 
+
+![Screenshot](showcase/image-5.png) 
+<br>
+<br>
+
 The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek and suave.
 
 **NeKoRoDOTS** aims to provide an out-of-the-box, clean and reliable, generic, and modular framework that lets you easily customize your desktop experience with simple UI design philosophy in mind.
@@ -144,11 +149,11 @@ You have two options:
 <br>
 <br>
 
-![Screenshot](showcase/image-4.png) 
+![Screenshot](showcase/image-8.png) 
 <br>
 <br>
 <br>
-![Screenshot](showcase/image-5.png) 
+![Screenshot](showcase/image-7.png) 
 <br>
 <br>
 <br>
