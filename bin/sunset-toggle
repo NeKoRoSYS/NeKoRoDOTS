@@ -1,20 +1,25 @@
 #!/bin/bash
 
-STATUS=$(hyprctl -j hyprsunset | jq -r '.identity')
+if ! systemctl --user is-active --quiet hyprsunset.service; then
+    systemctl --user start hyprsunset.service
+    sleep 0.5 # Give it a moment to initialize JSON output
+fi
 
-if [ "$STATUS" = "false" ]; then
-    # Smooth Fade
-    for t in {3000..6500..250}; do
-        hyprctl hyprsunset temperature $t
-        sleep 0.01
-    done
-    hyprctl hyprsunset temperature 0
-else
-    for t in {3000..6500..250}; do
+STATUS=$(hyprctl -j hyprsunset 2>/dev/null | jq -r '.identity' 2>/dev/null)
+
+if [ "$STATUS" = "true" ]; then
+    hyprctl hyprsunset identity false
+    for t in {6500..4350..-250}; do
         hyprctl hyprsunset temperature $t
         sleep 0.01
     done
     hyprctl hyprsunset temperature 4350
+else
+    for t in {4350..6500..250}; do
+        hyprctl hyprsunset temperature $t
+        sleep 0.01
+    done
+    hyprctl hyprsunset identity true
 fi
 
-(sleep 0.05 && swaync-client -op) &
+(sleep 0.05 && swaync-client -p) &
