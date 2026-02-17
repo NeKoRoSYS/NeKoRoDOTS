@@ -6,6 +6,8 @@
 <br>
 <br>
 
+![GitHub last commit](https://img.shields.io/github/last-commit/NeKoRoSYS/NeKoRoSHELL)
+
 # NeKoRoSHELL 
 <br>
 
