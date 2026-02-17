@@ -107,7 +107,6 @@ The following are what NeKoRoDOTS currently offers:
  
 - **Smart Navbar**
   - Uses bash script wrappers for `waybar` for the modes: Static, Dynamic, and Hover.
-<br>
   [Navbar Demo](https://github.com/user-attachments/assets/bc2bda7a-aaf5-48c8-8bab-a9fda7ffcfde)
 
 - **Advanced Customization - Make NeKoRoDOTS YOURS!**
