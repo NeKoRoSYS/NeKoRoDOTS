@@ -32,7 +32,9 @@ case "$CHOICE" in
 		;;
 esac
 
+WAYBAR_MODE_FILE="$HOME/.cache/.waybar_mode"
 HYPR="$HOME/.config/hypr/configs/windowrules.conf"
+MANAGEMENT_MODE=$(cat "$WAYBAR_MODE_FILE" 2>/dev/null || echo "static")
 
 case $FEATURE in
     lockscreen)
@@ -110,8 +112,15 @@ case $FEATURE in
                     ;;
                 navbar)
                     echo "{ \"include\": [ \"$PATH_SKIN/layout.jsonc\" ] }" > "$CONFIG"
-                    killall waybar && sleep 0.05
-                    systemctl --user restart waybar &
+                    pkill -SIGUSR2 waybar
+		    killall waybar && sleep 0.05
+		    if [ "$MANAGEMENT_MODE" = "static" ]; then
+			systemctl --user restart waybar.service &
+		    elif [ "$MANAGEMENT_MODE" = "hover" ]; then
+			systemctl --user restart navbar-hover.service
+		    else
+			systemctl --user restart navbar-watcher.service
+		    fi
                     ;;
             esac
 

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+STATE=1
+
+toggle_navbar() {
+    VISIBLE_WINDOWS=$(hyprctl clients -j | jq -r '
+        [ .[] | select(.workspace.id as $ws | 
+        (map(.activeWorkspace.id) | contains([$ws]))) ] | length
+    ' --argjson monitors "$(hyprctl monitors -j)")
+
+    VISIBLE_COUNT=$(hyprctl clients -j | jq --argjson monitors "$(hyprctl monitors -j)" '
+        [ .[] | .workspace.id ] as $window_workspaces |
+        [ $monitors[].activeWorkspace.id ] as $active_workspaces |
+        [ $window_workspaces[] | select(. as $w | $active_workspaces | contains([$w])) ] | length
+    ')
+
+    if [ "$VISIBLE_COUNT" -gt 0 ]; then
+	if ! pgrep -x "waybar" > /dev/null; then
+	    waybar &
+	    STATE=1
+	elif [ "$STATE" -eq 0 ]; then
+            pkill -SIGUSR1 waybar
+            STATE=1
+        fi
+    else
+        if pgrep -x "waybar" > /dev/null && [ "$STATE" -eq 1 ]; then
+            pkill -SIGUSR1 waybar
+            STATE=0
+        fi
+    fi
+}
+
+trap 'toggle_navbar' SIGUSR1
+
+toggle_navbar
+
+socat -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do
+    case $line in
+        openwindow*|closewindow*|movewindow*|workspace*|focusedmon*)
+            toggle_navbar
+            ;;
+    esac
+done
