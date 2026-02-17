@@ -6,9 +6,7 @@
 <br>
 <br>
 
-<p align="center">
 ![GitHub last commit](https://img.shields.io/github/last-commit/NeKoRoSYS/NeKoRoSHELL?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/NeKoRoSYS/NeKoRoSHELL?style=for-the-badge)
-</p>
 
 # NeKoRoSHELL 
 <br>
