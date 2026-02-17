@@ -67,6 +67,6 @@ Known issues:
 - Blue light filter option in the notifications center does not work as intended.
 <br>
 
-1.0
+# 1.0
 
 I am now confident to say that this rice is now a functional frontend for Arch Linux.
