@@ -62,7 +62,7 @@ NeKoRoDOTS focuses on simplicity and modularity.
 
 ### Roadmap
 
-NeKoRoDOTS is currently being developed by one person (*cough* [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoDOTS/tree/main?tab=readme-ov-file#) *cough*) and is constantly under rigorous quality assurance for improvement. We always aim to keep a "no-break" promise for every update so that you can safely update to later versions without expecting any breakages.
+NeKoRoDOTS is currently being developed by one person (*cough* [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoDOTS/tree/main?tab=contributing-ov-file#) *cough*) and is constantly under rigorous quality assurance for improvement. We always aim to keep a "no-break" promise for every update so that you can safely update to later versions without expecting any breakages.
 
 | 📋 **TODO** | **STATUS** |
 | :---: | :---: |
