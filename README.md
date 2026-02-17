@@ -15,7 +15,7 @@ The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek
 <br>
 <br>
 
-<p align="center">
+<div align="center">
 | 📌 **Table of Contents** |
 | :---: |
 | 🔗 [Dependencies](#dependencies) |
@@ -63,7 +63,7 @@ NeKoRoDOTS focuses on simplicity and modularity.
 
 NeKoRoDOTS is currently being developed by one person (*cough* [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoDOTS/tree/main?tab=contributing-ov-file#) *cough*) and is constantly under rigorous quality assurance for improvement. We always aim to keep a "no-break" promise for every update so that you can safely update to later versions without expecting any breakages.
 
-<p align="center">
+<div align="center">
 | 📋 **TODO** | **STATUS** |
 | :---: | :---: |
 | Improve base "legacy" theme | ✅ |
