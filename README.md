@@ -15,7 +15,6 @@ The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek
 <br>
 <br>
 
-<div align="center">
 | 📌 **Table of Contents** |
 | :---: |
 | 🔗 [Dependencies](#dependencies) |
@@ -24,7 +23,6 @@ The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek
 | 🤔 [Optional](#optional) |
 | 💸 [Sponsorship](#sponsorship) |
 | 🫂 [Contribution](#contribution) |
-</div>
 <br>
 
 ## Dependencies
@@ -58,23 +56,6 @@ The best way to say "I use Arch btw 🤓" is if your desktop profile looks sleek
 
 NeKoRoDOTS focuses on simplicity and modularity.
 <br>
-
-### Roadmap
-
-NeKoRoDOTS is currently being developed by one person (*cough* [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoDOTS/tree/main?tab=contributing-ov-file#) *cough*) and is constantly under rigorous quality assurance for improvement. We always aim to keep a "no-break" promise for every update so that you can safely update to later versions without expecting any breakages.
-
-<div align="center">
-| 📋 **TODO** | **STATUS** |
-| :---: | :---: |
-| Improve base "legacy" theme | ✅ |
-| Implement base functionality | ✅ |
-| Implement base QOL features | ✅ |
-| Optimizations | ✅ |
-| Color Handling - Replace pywal6 with wallust (BETA, [Issues](https://github.com/NeKoRoSYS/NeKoRoDOTS/issues/1)) | 🛑 |
-| Dmenu Overhaul - Replace wofi with rofi | 🛠 |
-| Support for other distros | ⏳ |
-| Qt and Kvantum integration | 🤔 |
-</div>
 
 The following are what NeKoRoDOTS currently offers:
 - **One-tap Installer Script**
@@ -139,8 +120,20 @@ The following are what NeKoRoDOTS currently offers:
 <br>
 <br>
 
-> [!WARNING]
-> `start-dashboard.sh` creates a grid layout for a 1920x1080 display, however I also provided a 1280x720 version of the dashboard in `~/.config/hypr/windowrules.conf/`. Anyhow, if your monitor has a different resolution, my dashboard preset may not appear as intended; I recommend making your own dashboard using the same bash script.
+### Roadmap
+
+NeKoRoDOTS is currently being developed by one person (*cough* [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoDOTS/tree/main?tab=contributing-ov-file#) *cough*) and is constantly under rigorous quality assurance for improvement. We always aim to keep a "no-break" promise for every update so that you can safely update to later versions without expecting any breakages.
+
+| 📋 **TODO** | **STATUS** |
+| :---: | :---: |
+| Improve base "legacy" theme | ✅ |
+| Implement base functionality | ✅ |
+| Implement base QOL features | ✅ |
+| Optimizations | ✅ |
+| Color Handling - Replace pywal6 with wallust (BETA, [Issues](https://github.com/NeKoRoSYS/NeKoRoDOTS/issues/1)) | 🛑 |
+| Dmenu Overhaul - Replace wofi with rofi | 🛠 |
+| Support for other distros | ⏳ |
+| Qt and Kvantum integration | 🤔 |
 <br>
 
 ## Desktop Customization
