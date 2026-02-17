@@ -2,7 +2,10 @@
 
 THUMB_CACHE="$HOME/.cache/wallpaper-thumbs"
 STATE_FILE="$HOME/.cache/theme_mode"
+WAYBAR_MODE_FILE="$HOME/.cache/.waybar_mode"
 colors="$HOME/.cache/wal/colors-waybar.css"
+
+MANAGEMENT_MODE=$(cat "$WAYBAR_MODE_FILE" 2>/dev/null || echo "static")
 
 img_path="${1:-$(cat "$HOME/.cache/wal/wal")}"
 current_theme="${2:-$(cat "$STATE_FILE")}"
@@ -16,9 +19,8 @@ else
     TARGET_IMG="$img_path"
 fi
 
-if command -v wallust >/dev/null 2>&1; then
+if command -v wal >/dev/null 2>&1; then
     echo "Updating system theme using: $(basename "$TARGET_IMG")"
-
 	sed -i '/^@define-color text/d' "$colors"
 	sed -i '/^@define-color text-invert/d' "$colors"
 	if [ "$current_theme" = "Dark" ]; then
@@ -34,7 +36,18 @@ if command -v wallust >/dev/null 2>&1; then
 		echo "@define-color text-invert #F5F5F5;" >> $colors	
 		echo "@define-color text #121212;" >> $colors
 	fi
-    killall waybar && sleep 0.05
-    systemctl --user restart waybar &
+
+	case "$MANAGEMENT_MODE" in
+	"static")
+		systemctl --user restart waybar.service &
+		;;
+	"hover")
+		systemctl --user restart navbar-hover.service &
+		;;
+	*)
+		systemctl --user restart navbar-watcher.service &
+		;;
+	esac
+
     swaync-client -rs
 fi

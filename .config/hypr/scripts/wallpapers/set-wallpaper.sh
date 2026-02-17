@@ -40,10 +40,10 @@ else
         if [ ! -f "$THUMB_PATH" ]; then
             gen_thumb "$line" &
         fi
-        echo "img:$THUMB_PATH:text:$FILENAME"        
+        echo "img:$THUMB_PATH:text:$FILENAME"
     done)
 
-    RAW_SELECTION=$(echo "$FILE_LIST" | wofi --dmenu --allow-images --prompt "Select wallpaper")    
+    RAW_SELECTION=$(echo "$FILE_LIST" | wofi --dmenu --allow-images --prompt "Select wallpaper")
     SELECTED_FILE=$(echo "$RAW_SELECTION" | sed 's/^.*:text://')
 fi
 
@@ -73,7 +73,7 @@ if [[ "$SELECTED_FILE" =~ ^http ]]; then
     while read -r progress; do
         makenotif "Download" "folder-download" "Downloading" "$progress% completed." "true" "" "$progress"
     done
-    
+
     DL_STATUS="${PIPESTATUS[0]}"
     set -e
 
@@ -112,8 +112,8 @@ case "$(echo "$EXTENSION" | tr '[:upper:]' '[:lower:]')" in
         ffmpeg -y -ss 00:00:05 -i "$WALL" -frames:v 1 "$TEMP_THUMB" > /dev/null 2>&1
 
 	bash "$SCRIPT_DIR/apply-theme.sh" $TEMP_THUMB
-        
-        # -o passes mpv flags: 
+
+        # -o passes mpv flags:
         #   loop-file=inf (loop forever)
         #   --mute (no sound)
         #   --no-osc/--no-osd-bar (hide UI)
@@ -131,17 +131,17 @@ case "$(echo "$EXTENSION" | tr '[:upper:]' '[:lower:]')" in
         __NV_PRIME_RENDER_OFFLOAD=1 mpvpaper -o "--input-ipc-server=$SOCKET loop-file=inf --mute --no-osc --no-osd-bar --hwdec=$HWDEC --vo=gpu --gpu-context=wayland --no-input-default-bindings" '*' "$WALL" &
 	mpvpaper-stop --socket-path "$SOCKET" --period 500 --fork &
         ;;
-    
+
     png|jpg|jpeg)
         echo "Image detected: $SELECTED_FILE"
         cleanup_backgrounds
 
 	rm -f "$VIDEO_CACHE"
-        
+
         # SWWW image setting (supports transitions)
         swww img "$WALL"
-                
-        # Pywal with your specific backends        
+
+        # Pywal with your specific backends
 	bash "$SCRIPT_DIR/apply-theme.sh" $WALL
         ;;
     *)
@@ -152,4 +152,3 @@ esac
 
 echo "Wallpaper update complete."
 makenotif customize "folder-pictures" "Wallpaper" "Changed wallpaper to $SELECTED_FILE" "true" ""
-
