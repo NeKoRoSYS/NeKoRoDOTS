@@ -106,9 +106,6 @@ int main() {
     while (true) {
         std::string layers = exec("hyprctl layers");
         if (layers.find("swaync-control-center") != std::string::npos) {
-            if (!is_bar_visible) {
-                toggle_waybar(true); 
-            }
             do {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             } while (exec("hyprctl layers").find("swaync-control-center") != std::string::npos);
