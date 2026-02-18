@@ -14,7 +14,7 @@ if [ -z "$CHOICE" ]; then
 fi
 
 stop_services() {
-    systemctl --user stop waybar.service
+    systemctl --user stop navbar.service
     systemctl --user stop navbar-watcher.service
     systemctl --user stop navbar-hover.service
     killall waybar 2>/dev/null
@@ -24,9 +24,9 @@ case "$CHOICE" in
     "$STATIC")
         if [ "$CURRENT_MODE" != "static" ]; then
             stop_services
-            systemctl --user start waybar.service
+            systemctl --user start navbar.service
             echo "static" > "$MODE_FILE"
-            makenotif customize preferences-system "Navbar" "Persistent mode enabled." true
+            makenotif customize preferences-system "Navbar" "Static mode enabled." true
         fi
         ;;
         
@@ -35,7 +35,7 @@ case "$CHOICE" in
             stop_services
             systemctl --user start navbar-watcher.service
             echo "dynamic" > "$MODE_FILE"
-            makenotif customize preferences-system "Navbar" "Smart Auto-hide enabled." true
+            makenotif customize preferences-system "Navbar" "Dynamic mode enabled." true
         fi
         ;;
         
@@ -44,7 +44,7 @@ case "$CHOICE" in
             stop_services
             systemctl --user start navbar-hover.service
             echo "hover" > "$MODE_FILE"
-            makenotif customize preferences-system "Navbar" "Hover Mode enabled." true
+            makenotif customize preferences-system "Navbar" "Hover mode enabled." true
         fi
         ;;
 esac
