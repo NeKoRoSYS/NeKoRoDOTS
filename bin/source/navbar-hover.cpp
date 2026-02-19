@@ -137,7 +137,7 @@ int main() {
             break;
         }
 
-        if (!started_waybar && retries > 5) break; 
+        if (!started_waybar && retries > 25) break; 
         
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         retries++;
