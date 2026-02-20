@@ -110,9 +110,10 @@ NeKoRoSHELL is currently being developed by one person (*cough* [CONTRIBUTING](h
 | Implement base QOL features | ✅ |
 | Optimizations | ✅ |
 | Color Handling - Replace pywal6 with wallust | ✅ |
-| Dmenu Overhaul - Replace wofi with rofi | 🛠 |
+| Dmenu Overhaul - Replace wofi with rofi | ✅ |
 | Support for other distros | ⏳ |
 | Qt and Kvantum integration | 🤔 |
+| Quickshell integration | 🤔 |
 <br>
 
 ## Desktop Customization
