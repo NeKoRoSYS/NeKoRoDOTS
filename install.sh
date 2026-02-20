@@ -33,7 +33,7 @@ fi
 
 if [ -f "pkglist.txt" ]; then
     echo -e "${BLUE}Installing packages from pkglist.txt...${NC}"
-    yay -S --needed --noconfirm $(cat pkglist.txt)
+    yay -S --needed --noconfirm - < pkglist.txt
 else
     echo -e "${RED}Warning: pkglist.txt not found! Skipping system pkgs.${NC}"
 fi
