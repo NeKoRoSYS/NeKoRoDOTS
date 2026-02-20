@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "# ======================================================= #"
-echo -e "#             NeKoRoSHELL Installation Wizard             #"
+echo -e "#               NeKoRoSHELL Installation Wizard             #"
 echo -e "# ======================================================= #\n "
 
 while true; do
@@ -19,27 +19,131 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+echo -e "${BLUE}Detecting operating system...${NC}"
+
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$ID
+    if [ "$OS" = "linuxmint" ] || [ "$OS" = "pop" ]; then
+        OS="ubuntu"
+    fi
+else
+    echo -e "${RED}Cannot detect operating system. /etc/os-release not found.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Detected OS: $OS${NC}"
+
 echo -e "${BLUE}Starting installation...${NC}"
 
-if command -v paru &> /dev/null; then
-    AUR_HELPER="paru"
-elif command -v yay &> /dev/null; then
-    AUR_HELPER="yay"
+echo -e "${BLUE}Installing system dependencies...${NC}"
+
+case "$OS" in
+    arch|endeavouros|manjaro)
+        if command -v paru &> /dev/null; then
+            AUR_HELPER="paru"
+        elif command -v yay &> /dev/null; then
+            AUR_HELPER="yay"
+        else
+            echo -e "${RED}Error: yay or paru is required for Arch.${NC}"
+            exit 1
+        fi
+        
+        if [ -f "pkglist-arch.txt" ]; then
+            $AUR_HELPER -S --needed --noconfirm - < pkglist-arch.txt
+        fi
+        ;;
+
+    fedora)
+        if [ -f "pkglist-fedora.txt" ]; then
+            sudo dnf install -y $(cat pkglist-fedora.txt)
+        else
+            echo -e "${RED}pkglist-fedora.txt not found!${NC}"
+        fi
+        ;;
+
+    ubuntu|debian)
+        echo -e "${RED}WARNING: Debian/Ubuntu do not provide Hyprland or its ecosystem (Hyprlock, Hypridle, SwayNC, etc.) in their standard repositories.${NC}"
+        echo -e "${RED}You must install Hyprland manually or via a 3rd party PPA/script before using this dotfile setup.${NC}"
+        sleep 3
+        if [ -f "pkglist-debian.txt" ]; then
+            sudo apt-get update
+            sudo apt-get install -y $(cat pkglist-debian.txt)
+        else
+            echo -e "${RED}pkglist-debian.txt not found!${NC}"
+        fi
+        ;;
+        
+    gentoo)
+        if [ -f "pkglist-gentoo.txt" ]; then
+            sudo emerge -av --noreplace $(cat pkglist-gentoo.txt)
+        else
+            echo -e "${RED}pkglist-gentoo.txt not found!${NC}"
+        fi
+        ;;
+
+    *)
+        echo -e "${RED}Unsupported OS: $OS. Please install dependencies manually.${NC}"
+        echo -ne "Do you wish to continue with config deployment anyway? (y/n): "
+        read -r continue_ans
+        if [[ ! "$continue_ans" =~ ^[Yy]$ ]]; then
+            exit 1
+        fi
+        ;;
+esac
+
+echo -e "${BLUE}Checking for packages that require Cargo (Rust)...${NC}"
+if command -v cargo &> /dev/null; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+
+    if ! command -v wallust &> /dev/null; then
+        echo -e "${BLUE}Installing wallust via cargo... This may take a few minutes.${NC}"
+        cargo install wallust
+    else
+        echo -e "${GREEN}wallust is already installed.${NC}"
+    fi
+
+    if ! command -v swww &> /dev/null; then
+        echo -e "${BLUE}Installing swww via cargo... This may take a few minutes.${NC}"
+        cargo install --git https://github.com/LGFae/swww.git
+    else
+        echo -e "${GREEN}swww is already installed.${NC}"
+    fi
+
+    if ! grep -q 'export PATH="$HOME/.cargo/bin:$PATH"' ~/.bashrc; then
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+    fi
+    if [ -f ~/.zshrc ] && ! grep -q 'export PATH="$HOME/.cargo/bin:$PATH"' ~/.zshrc; then
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+    fi
 else
-    echo -e "${RED}Error: Neither yay nor paru is installed.${NC}"
-    exit 1
+    echo -e "${RED}Cargo is not installed. Some tools (wallust, swww) could not be verified or installed.${NC}"
+fi
+
+echo -e "${BLUE}Checking for packages that require Go...${NC}"
+if command -v go &> /dev/null; then
+    export PATH="$HOME/go/bin:$PATH"
+
+    if ! command -v cliphist &> /dev/null; then
+        echo -e "${BLUE}Installing cliphist via Go...${NC}"
+        go install go.senan.xyz/cliphist@latest
+    else
+        echo -e "${GREEN}cliphist is already installed.${NC}"
+    fi
+
+    if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' ~/.bashrc; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bashrc
+    fi
+    if [ -f ~/.zshrc ] && ! grep -q 'export PATH="$HOME/go/bin:$PATH"' ~/.zshrc; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
+    fi
+else
+    echo -e "${RED}Go is not installed. Cliphist could not be verified or installed.${NC}"
 fi
 
 if ! command -v flatpak &> /dev/null; then
     echo -e "${RED}Error: flatpak is not installed.${NC}"
     exit 1
-fi
-
-if [ -f "pkglist.txt" ]; then
-    echo -e "${BLUE}Installing packages from pkglist.txt using $AUR_HELPER...${NC}"
-    $AUR_HELPER -S --needed --noconfirm - < pkglist.txt
-else
-    echo -e "${RED}Warning: pkglist.txt not found! Skipping system pkgs.${NC}"
 fi
 
 if [ -f "flatpak.txt" ]; then
@@ -108,6 +212,17 @@ cp .face.icon ~/
 cp change-avatar.sh ~/
 cp -r bin ~/
 
+if ! command -v hyprshot &> /dev/null; then
+    echo -e "${BLUE}Downloading hyprshot...${NC}"
+    mkdir -p ~/bin
+    curl -sLo ~/bin/hyprshot https://raw.githubusercontent.com/Gustash/Hyprshot/main/hyprshot
+    chmod +x ~/bin/hyprshot
+fi
+
+if [ ! -d "$HOME/powerlevel10k" ]; then
+    echo -e "${BLUE}Cloning Powerlevel10k theme...${NC}"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+fi
 
 echo -e "${BLUE}Compiling C++ Daemons...${NC}"
 g++ -O3 -o ~/bin/navbar-hover bin/source/navbar-hover.cpp
@@ -117,9 +232,14 @@ echo -e "${BLUE}Setting script permissions...${NC}"
 find ~/.config/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*" -exec chmod +x {} + 2>/dev/null
-echo -e "${BLUE}Enabling waybar...${NC}"
-systemctl --user enable waybar.service
-echo -e "${BLUE}Enabling SwayNC...${NC}"
-systemctl --user enable swaync.service
+
+if command -v "systemctl" >/dev/null 2>&1; then
+    echo -e "${BLUE}Enabling waybar...${NC}"
+    systemctl --user enable waybar.service
+    echo -e "${BLUE}Enabling SwayNC...${NC}"
+    systemctl --user enable swaync.service
+else
+    echo -e "${RED}Cannot run command 'systemctl'. Please enable the waybar and SwayNC services manually.${NC}"
+fi
 
 echo -e "${GREEN}Installation complete! Please restart your session.${NC}"
