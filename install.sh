@@ -6,8 +6,8 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "# ======================================================= #"
-echo -e "#               NeKoRoSHELL Installation Wizard           #"
-echo -e "# ======================================================= #\n"
+echo -e "#             NeKoRoSHELL Installation Wizard             #"
+echo -e "# ======================================================= #\n "
 
 echo -e "${BLUE}Please choose your installation type:${NC}"
 echo -e "  ${GREEN}Minimal${NC}     - Backup existing .config files, copy the new .config files, and replace the hardcoded directories, but don't install dependencies."
