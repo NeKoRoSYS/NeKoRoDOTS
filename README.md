@@ -162,23 +162,19 @@ You have two options:
  
 - This rice uses `rofi` to run actions and apps.
   - Some apps like `mpvpaper` needs to be ran using `prime-run` and `gamemoderun`
-    - Install via `sudo pacman -S nvidia-prime gamemode`.
-  - (Automatically provided by `pkglist.txt` if you used the `install.sh` bash file)
 
 - `hyprland` uses `hypridle` and `hyprlock`.
-  - Install them via `sudo pacman -S hyprlock hypridle`. (Automatically provided by `pkglist.txt` if you used the `install.sh` bash file)
 
 - Waybar was set up to use `kitty`, `Mozilla Firefox`, and `dolphin`. You can change this if you want at `~/.config/waybar/config.jsonc`.
 
 - The screenshot and clipboard features need `grim`, `slurp`, `hyprshot`, `wl-clipboard`, and `cliphist` to run.
-  - Install them via `sudo pacman -S grim wl-clipboard cliphist`. (Automatically provided by `pkglist.txt` if you used the `install.sh` bash file)
 <br>
 
 ## Optional
 
 Mostly personal notes just in case I switch over to another PC. Do NOT copy my Grub Linux CMDLINE and mkinitcpio modules unless you also have a laptop with old hybrid GPUs (Intel Graphics 620 and Nvidia GeForce 940mx).
 
-### System Booting
+### System Booting (Dualboot)
 - Use [MineGrub](https://github.com/Lxtharia/minegrub-world-sel-theme) theme for Grub.
 - Identify GPU names.
 - `/etc/modprobe.d/nvidia.conf`
@@ -190,7 +186,7 @@ Mostly personal notes just in case I switch over to another PC. Do NOT copy my G
   ```
   
 - Modify `/etc/default/grub`
-  - `sudo pacman -S os-prober`
+  - Install `os-prober`.
  
     ```
     GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet rd.udev.log_level=3 systemd.show_status=auto vt.global_cursor_default=0 nvidia_drm.modeset=1 nvidia_drm.fbdev=1 pci=noaer pcie_aspm=off nvme_core.default_ps_max_latency_us=0 nvidia.NVreg_EnableS0ixPowerManagement=1 intel_pstate=active i915.modeset=1 i915.enable_fbc=1 mitigations=off"
@@ -251,8 +247,5 @@ Mostly personal notes just in case I switch over to another PC. Do NOT copy my G
 ### Quality-of-Life
 - Install [Hypremoji](https://github.com/Musagy/hypremoji)
 - Install `blueman` and `r-quick-share` for seamless bluetooth support. (Works with Apple Airpods and android phone)
-- Fix waybar tray disappearing after a certain amount of time.
-  ```
-  yay -S sni-qt
-  ```
+- Fix waybar tray disappearing after a certain amount of time by installing `sni-qt`.
   Make sure you're not killing waybar using -SIGUSER2 when refreshing the config.
