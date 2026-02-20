@@ -291,14 +291,12 @@ inject_shell_config() {
     fi
     
     if [[ -f "$shell_rc" ]]; then
-        if ! grep -q "# --- NeKoRoSHELL START ---" "$shell_rc"; then
-            echo -e "\n# --- NeKoRoSHELL START ---" >> "$shell_rc"
-            [[ -f "$source_rc" ]] && cat "$source_rc" >> "$shell_rc"
-            
-            echo "export PATH=\"\$HOME/bin:\$HOME/.local/bin:\$HOME/.cargo/bin:$go_bin_path:\$PATH\"" >> "$shell_rc"
-            echo -e "# --- NeKoRoSHELL END ---" >> "$shell_rc"
-            echo -e "${GREEN}Updated $shell_rc${NC}"
-        fi
+        sed -i '/# --- NeKoRoSHELL START ---/,/# --- NeKoRoSHELL END ---/d' "$shell_rc"
+        echo -e "\n# --- NeKoRoSHELL START ---" >> "$shell_rc"
+        [[ -f "$source_rc" ]] && cat "$source_rc" >> "$shell_rc"
+        echo "export PATH=\"\$HOME/bin:\$HOME/.local/bin:\$HOME/.cargo/bin:$go_bin_path:\$PATH\"" >> "$shell_rc"
+        echo -e "# --- NeKoRoSHELL END ---" >> "$shell_rc"
+        echo -e "${GREEN}Updated $shell_rc${NC}"
     fi
 }
 
