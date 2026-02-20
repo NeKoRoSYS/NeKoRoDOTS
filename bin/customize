@@ -41,11 +41,17 @@ case $FEATURE in
 	    makenotif customize preferences-desktop-theme Theme "Select a theme." true
         fi
 
-	CHOICE=${CMD_CHOICE:-$(ls "$THEME_DIR" | grep '\.sh$' | rofi -dmenu -p "Select Theme")}
+	CHOICE=${CMD_CHOICE:-$(find "$THEME_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort | rofi -dmenu -p "Select Theme")}
 
-        if [ -n "$CHOICE" ]; then
-	    bash $THEME_DIR/$CHOICE
-            makenotif customize preferences-desktop-theme Theme "Theme changed to: ${CHOICE%}" true
+	if [ -n "$CHOICE" ]; then
+            TARGET_SCRIPT=$(find "$THEME_DIR/$CHOICE" -maxdepth 1 -name "*.sh" | head -n 1)
+            
+            if [ -n "$TARGET_SCRIPT" ]; then
+	        bash "$TARGET_SCRIPT"
+                makenotif customize preferences-desktop-theme Theme "Theme changed to: $CHOICE" true
+            else
+                echo "Error: No .sh file found in $THEME_DIR/$CHOICE"
+            fi
         fi
 	;;
 
@@ -57,11 +63,17 @@ case $FEATURE in
 	    makenotif customize preferences-desktop-theme Lockscreen "Select a lockscreen layout." true
         fi
 
-	CHOICE=${CMD_CHOICE:-$(ls "$SKIN_DIR" | grep '\.conf$' | rofi -dmenu -p "Select Lockscreen Layout")}
+	CHOICE=${CMD_CHOICE:-$(find "$SKIN_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort | rofi -dmenu -p "Select Lockscreen Layout")}
 
         if [ -n "$CHOICE" ]; then
-            echo "source = $SKIN_DIR/$CHOICE" > "$MAIN"
-            makenotif customize preferences-desktop-theme Lockscreen "Layout changed to: ${CHOICE%.conf}" true
+            TARGET_CONF=$(find "$SKIN_DIR/$CHOICE" -maxdepth 1 -name "*.conf" | head -n 1)
+            
+            if [ -n "$TARGET_CONF" ]; then
+                echo "source = $TARGET_CONF" > "$MAIN"
+                makenotif customize preferences-desktop-theme Lockscreen "Layout changed to: $CHOICE" true
+            else
+                echo "Error: No .conf file found in $SKIN_DIR/$CHOICE"
+            fi
         fi
         ;;
         
