@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "# ======================================================= #"
-echo -e "#             NeKoRoSHELL Installation Wizard             #"
+echo -e "#               NeKoRoSHELL Installation Wizard             #"
 echo -e "# ======================================================= #\n "
 
 while true; do
@@ -63,6 +63,9 @@ case "$OS" in
         ;;
 
     ubuntu|debian)
+        echo -e "${RED}WARNING: Debian/Ubuntu do not provide Hyprland or its ecosystem (Hyprlock, Hypridle, SwayNC, etc.) in their standard repositories.${NC}"
+        echo -e "${RED}You must install Hyprland manually or via a 3rd party PPA/script before using this dotfile setup.${NC}"
+        sleep 3
         if [ -f "pkglist-debian.txt" ]; then
             sudo apt-get update
             sudo apt-get install -y $(cat pkglist-debian.txt)
@@ -90,7 +93,6 @@ case "$OS" in
 esac
 
 echo -e "${BLUE}Checking for packages that require Cargo (Rust)...${NC}"
-
 if command -v cargo &> /dev/null; then
     export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -116,6 +118,27 @@ if command -v cargo &> /dev/null; then
     fi
 else
     echo -e "${RED}Cargo is not installed. Some tools (wallust, swww) could not be verified or installed.${NC}"
+fi
+
+echo -e "${BLUE}Checking for packages that require Go...${NC}"
+if command -v go &> /dev/null; then
+    export PATH="$HOME/go/bin:$PATH"
+
+    if ! command -v cliphist &> /dev/null; then
+        echo -e "${BLUE}Installing cliphist via Go...${NC}"
+        go install go.senan.xyz/cliphist@latest
+    else
+        echo -e "${GREEN}cliphist is already installed.${NC}"
+    fi
+
+    if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' ~/.bashrc; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bashrc
+    fi
+    if [ -f ~/.zshrc ] && ! grep -q 'export PATH="$HOME/go/bin:$PATH"' ~/.zshrc; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
+    fi
+else
+    echo -e "${RED}Go is not installed. Cliphist could not be verified or installed.${NC}"
 fi
 
 if ! command -v flatpak &> /dev/null; then
@@ -189,6 +212,17 @@ cp .face.icon ~/
 cp change-avatar.sh ~/
 cp -r bin ~/
 
+if ! command -v hyprshot &> /dev/null; then
+    echo -e "${BLUE}Downloading hyprshot...${NC}"
+    mkdir -p ~/bin
+    curl -sLo ~/bin/hyprshot https://raw.githubusercontent.com/Gustash/Hyprshot/main/hyprshot
+    chmod +x ~/bin/hyprshot
+fi
+
+if [ ! -d "$HOME/powerlevel10k" ]; then
+    echo -e "${BLUE}Cloning Powerlevel10k theme...${NC}"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+fi
 
 echo -e "${BLUE}Compiling C++ Daemons...${NC}"
 g++ -O3 -o ~/bin/navbar-hover bin/source/navbar-hover.cpp
