@@ -36,20 +36,6 @@ echo -e "${GREEN}Detected OS: $OS${NC}"
 
 echo -e "${BLUE}Starting installation...${NC}"
 
-if command -v paru &> /dev/null; then
-    AUR_HELPER="paru"
-elif command -v yay &> /dev/null; then
-    AUR_HELPER="yay"
-else
-    echo -e "${RED}Error: Neither yay nor paru is installed.${NC}"
-    exit 1
-fi
-
-if ! command -v flatpak &> /dev/null; then
-    echo -e "${RED}Error: flatpak is not installed.${NC}"
-    exit 1
-fi
-
 echo -e "${BLUE}Installing system dependencies...${NC}"
 
 case "$OS" in
@@ -102,6 +88,11 @@ case "$OS" in
         fi
         ;;
 esac
+
+if ! command -v flatpak &> /dev/null; then
+    echo -e "${RED}Error: flatpak is not installed.${NC}"
+    exit 1
+fi
 
 if [ -f "flatpak.txt" ]; then
     echo -e "${BLUE}Installing packages from flatpak.txt using flatpak...${NC}"
@@ -178,9 +169,14 @@ echo -e "${BLUE}Setting script permissions...${NC}"
 find ~/.config/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*" -exec chmod +x {} + 2>/dev/null
-echo -e "${BLUE}Enabling waybar...${NC}"
-systemctl --user enable waybar.service
-echo -e "${BLUE}Enabling SwayNC...${NC}"
-systemctl --user enable swaync.service
+
+if command -v "systemctl" >/dev/null 2>&1; then
+    echo -e "${BLUE}Enabling waybar...${NC}"
+    systemctl --user enable waybar.service
+    echo -e "${BLUE}Enabling SwayNC...${NC}"
+    systemctl --user enable swaync.service
+else
+    echo -e "${RED}Cannot run command "systemctl". please enable the waybar and SwanNC services manually.${NC}"
+fi
 
 echo -e "${GREEN}Installation complete! Please restart your session.${NC}"
