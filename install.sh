@@ -109,7 +109,7 @@ find ~/.config/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*.sh" -exec chmod +x {} + 2>/dev/null
 find ~/bin/ -name "*" -exec chmod +x {} + 2>/dev/null
 echo -e "${BLUE}Enabling waybar...${NC}"
-sudo systemctl enable ~/.config/systemd/user/waybar.service
+systemctl --user enable waybar.service
 echo -e "${BLUE}Enabling SwayNC...${NC}"
 systemctl --user enable swaync.service
 
