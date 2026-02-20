@@ -28,7 +28,7 @@ gen_thumb() {
 }
 
 if [ -n "${1:-}" ]; then
-    SELECTED_FILE=$(basename "$1")
+    SELECTED_FILE="${1##*/}"
 else
     shopt -s nocaseglob nullglob
 
@@ -45,19 +45,27 @@ else
         done
     }
 
-    if RAW_SELECTION=$(get_wallpapers | rofi -dmenu \
-        -i \
-        -p "Select Wallpaper" \-show-icons \
-        -theme-str 'window { width: 800px; }' \
-	-theme-str 'listview { columns: 4; lines: 3; spacing: 15px; fixed-columns: true; flow: horizontal; }' \
-        -theme-str 'element { orientation: vertical; padding: 10px; border-radius: 10px; }' \
-        -theme-str 'element-icon { size: 120px; horizontal-align: 0.5; }' \
-        -theme-str 'element-text { horizontal-align: 0.5; padding: 5px 0px 0px 0px; }'); then
-        
-        SELECTED_FILE="$RAW_SELECTION"
+    if [ -n "${1:-}" ]; then
+        RAW_SELECTION="$1"
     else
-        shopt -u nocaseglob nullglob
-        exit 0
+        RAW_SELECTION=$(get_wallpapers | rofi -dmenu \
+            -i \
+            -p "Select Wallpaper" \-show-icons \
+            -theme-str 'window { width: 800px; }' \
+	    -theme-str 'listview { columns: 4; lines: 3; spacing: 15px; fixed-columns: true; flow: horizontal; }' \
+            -theme-str 'element { orientation: vertical; padding: 10px; border-radius: 10px; }' \
+            -theme-str 'element-icon { size: 120px; horizontal-align: 0.5; }' \
+            -theme-str 'element-text { horizontal-align: 0.5; padding: 5px 0px 0px 0px; }');
+    fi
+
+    [ -z "$RAW_SELECTION" ] && exit 0
+
+    if [[ -f "$RAW_SELECTION" ]]; then
+        WALL="$RAW_SELECTION"
+        SELECTED_FILE="${RAW_SELECTION##*/}"
+    else
+        SELECTED_FILE="${RAW_SELECTION##*/}"
+        WALL="$WALL_DIR/$SELECTED_FILE"
     fi
     
     shopt -u nocaseglob nullglob
@@ -125,7 +133,7 @@ case "$(echo "$EXTENSION" | tr '[:upper:]' '[:lower:]')" in
         TEMP_THUMB="/tmp/wall_thumb.jpg"
         ffmpeg -y -ss 00:00:05 -i "$WALL" -frames:v 1 -vf "scale=200:-1" "$TEMP_THUMB" > /dev/null 2>&1
 
-        bash "$SCRIPT_DIR/apply-theme.sh" "$WALL"
+        bash "$SCRIPT_DIR/apply-colors.sh" "$WALL"
 
         export LIBVA_DRIVER_NAME=iHD
         if lspci | grep -qi nvidia; then
@@ -147,7 +155,7 @@ case "$(echo "$EXTENSION" | tr '[:upper:]' '[:lower:]')" in
 
         swww img "$WALL"
 
-        bash "$SCRIPT_DIR/apply-theme.sh" "$WALL"
+        bash "$SCRIPT_DIR/apply-colors.sh" "$WALL"
         ;;
     *)
         echo "Unsupported format: $EXTENSION"
