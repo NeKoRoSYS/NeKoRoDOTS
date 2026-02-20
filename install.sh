@@ -183,18 +183,40 @@ fi
 # ==============================================================================
 
 backup_config() {
-    if [[ -d "$1" ]]; then
-        local base_name
-        base_name=$(basename "$1")
-        local backup_name="${1}_backup_$(date +%Y%m%d_%H%M%S)"
-        echo -e "${BLUE}Backing up existing $base_name to $(basename "$backup_name")${NC}"
-        mv "$1" "$backup_name"
+    local target_dir="$1"
+    local source_dir="$2"
+
+    if [[ -d "$target_dir" ]]; then
+        if [[ -d "$source_dir" ]]; then
+            if diff -rq "$target_dir" "$source_dir" >/dev/null 2>&1; then
+                echo -e "${GREEN}$(basename "$target_dir") is already up-to-date. Skipping backup.${NC}"
+                return 1
+            fi
+        fi
+
+        local base_name=$(basename "$target_dir")
+        local backup_name="${target_dir}_backup_$(date +%Y%m%d_%H%M%S)"
+        echo -e "${BLUE}Modifications detected. Backing up existing $base_name to $(basename "$backup_name")${NC}"
+        mv "$target_dir" "$backup_name"
     fi
+    return 0
 }
 
 CONFIGS=(btop cava fastfetch hypr hypremoji kitty rofi swaync systemd wallpapers wallust waybar)
+
+echo -e "${BLUE}Deploying configuration files...${NC}"
+mkdir -p "$HOME/.config"
+
 for conf in "${CONFIGS[@]}"; do
-    backup_config "$HOME/.config/$conf"
+    backup_config "$HOME/.config/$conf" ".config/$conf"
+    if [[ $? -eq 0 ]]; then
+        if [[ -d ".config/$conf" ]]; then
+            cp -r ".config/$conf" "$HOME/.config/" 2>/dev/null
+            echo -e "  Copied new $conf config."
+        else
+            echo -e "${RED}  Warning: .config/$conf missing in source directory.${NC}"
+        fi
+    fi
 done
 
 echo -e "${BLUE}Deploying configuration files...${NC}"
@@ -306,21 +328,36 @@ if [[ "$INSTALL_TYPE" == "compilation" ]]; then
     fi
 
     if ! command -v g++ &> /dev/null; then
-        echo -e "${RED}g++ is not installed. Please install build tools to compile the C++ daemons.${NC}"
+        echo -e "${RED}g++ is not installed. Please install build tools (e.g., build-essential or base-devel) to compile the C++ daemons.${NC}"
+    elif ! command -v pkg-config &> /dev/null; then
+        echo -e "${RED}pkg-config is not installed. Cannot verify C++ header dependencies.${NC}"
     else
-        echo -e "${BLUE}Compiling C++ Daemons...${NC}"
-        mkdir -p "$HOME/bin"
+        echo -e "${BLUE}Checking C++ build dependencies...${NC}"
         
-        if [[ -f "bin/source/navbar-hover.cpp" ]]; then
-            g++ -O3 -o "$HOME/bin/navbar-hover" bin/source/navbar-hover.cpp
-        else
-            echo -e "${RED}Warning: bin/source/navbar-hover.cpp not found.${NC}"
-        fi
+        REQUIRED_LIBS="wayland-client" 
         
-        if [[ -f "bin/source/navbar-watcher.cpp" ]]; then
-            g++ -O3 -o "$HOME/bin/navbar-watcher" bin/source/navbar-watcher.cpp
+        if ! pkg-config --exists $REQUIRED_LIBS; then
+            echo -e "${RED}Missing required C++ development headers: $REQUIRED_LIBS${NC}"
+            echo -e "${RED}Please install the corresponding -dev / -devel packages. Compilation aborted.${NC}"
         else
-            echo -e "${RED}Warning: bin/source/navbar-watcher.cpp not found.${NC}"
+            echo -e "${BLUE}Compiling C++ Daemons...${NC}"
+            mkdir -p "$HOME/bin"
+            
+            LIBS=$(pkg-config --cflags --libs $REQUIRED_LIBS)
+            
+            if [[ -f "bin/source/navbar-hover.cpp" ]]; then
+                g++ -O3 -o "$HOME/bin/navbar-hover" bin/source/navbar-hover.cpp $LIBS
+                echo -e "${GREEN}Successfully compiled navbar-hover.${NC}"
+            else
+                echo -e "${RED}Warning: bin/source/navbar-hover.cpp not found.${NC}"
+            fi
+            
+            if [[ -f "bin/source/navbar-watcher.cpp" ]]; then
+                g++ -O3 -o "$HOME/bin/navbar-watcher" bin/source/navbar-watcher.cpp $LIBS
+                echo -e "${GREEN}Successfully compiled navbar-watcher.${NC}"
+            else
+                echo -e "${RED}Warning: bin/source/navbar-watcher.cpp not found.${NC}"
+            fi
         fi
     fi
 fi
