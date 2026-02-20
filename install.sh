@@ -55,18 +55,10 @@ backup_config() {
     fi
 }
 
-backup_config ~/.config/btop
-backup_config ~/.config/cava
-backup_config ~/.config/fastfetch
-backup_config ~/.config/hypr
-backup_config ~/.config/hypremoji
-backup_config ~/.config/kitty
-backup_config ~/.config/rofi
-backup_config ~/.config/swaync
-backup_config ~/.config/systemd
-backup_config ~/.config/wallpapers
-backup_config ~/.config/wallust
-backup_config ~/.config/waybar
+CONFIGS=(btop cava fastfetch hypr hypremoji kitty rofi swaync systemd wallpapers wallust waybar)
+for conf in "${CONFIGS[@]}"; do
+    backup_config "$HOME/.config/$conf"
+done
 
 echo -e "${BLUE}Deploying configuration files...${NC}"
 mkdir -p ~/.config
