@@ -89,6 +89,35 @@ case "$OS" in
         ;;
 esac
 
+echo -e "${BLUE}Checking for packages that require Cargo (Rust)...${NC}"
+
+if command -v cargo &> /dev/null; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+
+    if ! command -v wallust &> /dev/null; then
+        echo -e "${BLUE}Installing wallust via cargo... This may take a few minutes.${NC}"
+        cargo install wallust
+    else
+        echo -e "${GREEN}wallust is already installed.${NC}"
+    fi
+
+    if ! command -v swww &> /dev/null; then
+        echo -e "${BLUE}Installing swww via cargo... This may take a few minutes.${NC}"
+        cargo install --git https://github.com/LGFae/swww.git
+    else
+        echo -e "${GREEN}swww is already installed.${NC}"
+    fi
+
+    if ! grep -q 'export PATH="$HOME/.cargo/bin:$PATH"' ~/.bashrc; then
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+    fi
+    if [ -f ~/.zshrc ] && ! grep -q 'export PATH="$HOME/.cargo/bin:$PATH"' ~/.zshrc; then
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+    fi
+else
+    echo -e "${RED}Cargo is not installed. Some tools (wallust, swww) could not be verified or installed.${NC}"
+fi
+
 if ! command -v flatpak &> /dev/null; then
     echo -e "${RED}Error: flatpak is not installed.${NC}"
     exit 1
