@@ -16,6 +16,13 @@ echo -e "${BLUE}Please choose your installation type:${NC}"
 echo -e "  ${GREEN}Minimal${NC}     - Backup existing .config files, copy the new .config files, and replace the hardcoded directories, but don't install dependencies."
 echo -e "  ${GREEN}Compilation${NC} - Backup existing .config files, copy the new .config files over, replace the hardcoded directories, and install every dependency.\n"
 
+cleanup() {
+    if [[ -n "$SUDO_PID" ]]; then
+        kill "$SUDO_PID" 2>/dev/null
+    fi
+}
+trap cleanup EXIT
+
 INSTALL_TYPE=""
 while true; do
     echo -ne "${BLUE}Type 'Minimal' or 'Compilation' to proceed (or 'exit' to abort): ${NC}"
@@ -32,8 +39,8 @@ while true; do
         
         echo -e "${BLUE}Caching sudo credentials for dependency installation...${NC}"
         sudo -v
-        while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-        
+        ( while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done ) 2>/dev/null &
+        SUDO_PID=$!
         break
     elif [[ "$choice" == "exit" ]]; then
         echo -e "${RED}Installation aborted.${NC}"
@@ -239,25 +246,21 @@ fi
 SEARCH="/home/nekorosys"
 REPLACE="$HOME"
 
-echo -e "${BLUE}Replacing hardcoded paths ($SEARCH -> $REPLACE)...${NC}"
-find "$HOME/.config" -type f -print0 2>/dev/null | xargs -0 -r sed -i "s|$SEARCH|$REPLACE|g" 2>/dev/null
+echo -e "${BLUE}Replacing hardcoded paths... ($SEARCH -> $REPLACE)...${NC}"
+find "$HOME/.config" -type f \( -name "*.config" -o -name "*.css" -o -name "*.rasi" -o -name "*.conf" -o -name "*.sh" -o -name "*.json" -o -name "*.jsonc" -o -name "*.lua" -o -name "*.py" -o -name "*.yaml" \) -print0 2>/dev/null | xargs -0 -r sed -i "s|$SEARCH|$REPLACE|g"
 
 inject_shell_config() {
     local shell_rc="$1"
     local source_rc="$2"
     
-    if command -v "${shell_rc##*.}" >/dev/null 2>&1 && [[ -f "$source_rc" ]]; then
-        echo "Appending configs to $shell_rc..."
-        if ! grep -q "# --- NeKoRoSHELL START ---" "$shell_rc" 2>/dev/null; then
+    if [[ -f "$shell_rc" ]]; then
+        if ! grep -q "# --- NeKoRoSHELL START ---" "$shell_rc"; then
             echo -e "\n# --- NeKoRoSHELL START ---" >> "$shell_rc"
-            cat "$source_rc" >> "$shell_rc"
+            [[ -f "$source_rc" ]] && cat "$source_rc" >> "$shell_rc"
             
-            [[ -d "$HOME/.cargo/bin" ]] && echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> "$shell_rc"
-            [[ -d "$HOME/go/bin" ]] && echo 'export PATH="$HOME/go/bin:$PATH"' >> "$shell_rc"
-            
+            echo 'export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"' >> "$shell_rc"
             echo -e "# --- NeKoRoSHELL END ---" >> "$shell_rc"
-        else
-            echo -e "${GREEN}NeKoRoSHELL configs already present in $shell_rc. Skipping append.${NC}"
+            echo -e "${GREEN}Updated $shell_rc${NC}"
         fi
     fi
 }
@@ -321,6 +324,7 @@ if command -v systemctl >/dev/null 2>&1; then
     echo -e "${BLUE}Enabling Wayland services...${NC}"
     systemctl --user enable waybar.service 2>/dev/null
     systemctl --user enable swaync.service 2>/dev/null
+    systemctl --user daemon-reload
 else
     echo -e "${RED}Cannot run systemctl. Please enable waybar and SwayNC manually.${NC}"
 fi
