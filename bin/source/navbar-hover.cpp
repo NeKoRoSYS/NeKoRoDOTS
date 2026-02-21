@@ -1,4 +1,5 @@
 #include <iostream>
+#include <csignal>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -45,6 +46,14 @@ int parse_int_value(const std::string& json, size_t pos) {
     }
     if (pos >= json.length()) return -999;
     return std::stoi(json.substr(pos));
+}
+
+pid_t get_waybar_pid() {
+    std::string pid_str = exec("pgrep -x waybar");
+    if (!pid_str.empty()) {
+        try { return std::stoi(pid_str); } catch(...) {}
+    }
+    return -1;
 }
 
 bool is_bar_visible = true;
@@ -137,8 +146,18 @@ int main() {
         exit(1);
     }
 
-    is_bar_visible = true;
+    for (int i = 0; i < 40; ++i) { 
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        std::string layers = exec("hyprctl layers");
+        if (layers.find("waybar") != std::string::npos) {
+            break;
+        }
+    }
+    
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    is_bar_visible = true;
+    pid_t current_waybar_pid = pid;
 
     while (true) {
         wait_for_swaync();
@@ -146,6 +165,20 @@ int main() {
         if (++cycle_count >= 50) {
             cfg = read_config();
             monitors = get_monitors();
+            
+	    if (current_waybar_pid > 0 && kill(current_waybar_pid, 0) != 0) {
+                pid_t new_pid = get_waybar_pid();
+                if (new_pid > 0) {
+                    is_bar_visible = true;
+                    current_waybar_pid = new_pid;
+                } else {
+                    current_waybar_pid = -1;
+                }
+            } else if (current_waybar_pid <= 0) {
+                current_waybar_pid = get_waybar_pid();
+                if (current_waybar_pid > 0) is_bar_visible = true;
+            }
+            
             cycle_count = 0;
         }
 
