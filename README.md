@@ -113,6 +113,7 @@ NeKoRoSHELL is currently being developed by one person (*cough* [CONTRIBUTING](h
 | Support for other distros; BETA, see [CONTRIBUTING](https://github.com/NeKoRoSYS/NeKoRoSHELL/tree/main?tab=contributing-ov-file#) | 🔍 |
 | Theme System - Set all skins in one go | ✅ |
 | wlogout integration | ⏳ |
+| Example Minecraft Theme| 🤔 |
 | Qt and Kvantum integration | 🤔 |
 | Quickshell integration | 🤔 |
 
