@@ -74,7 +74,7 @@ The following are what NeKoRoSHELL currently offers:
   - Dedicated Theming System:
     - Select individual skins for Waybar, Rofi, Hyprlock, and SwayNC
     - **Wallpaper Handling**
-      - Supports both online (yes, online.) and offline image (via `swww`) and video (via `mpvpaper`) formats.
+      - Supports both online and offline image (via `swww`) and video (via `mpvpaper`) formats.
         - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU/RAM and GPU space.
         - Paste image or video links with valid file extensions in the rofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
       - Border colors and UI elements have dynamic color schemes.
