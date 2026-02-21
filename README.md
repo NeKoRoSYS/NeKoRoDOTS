@@ -69,14 +69,17 @@ The following are what NeKoRoSHELL currently offers:
 
 - **Advanced Customization - Make NeKoRoSHELL YOURS!**
   - NeKoRoSHELL is not just an identity, it is a framework. This repo gives you at most 2 pre-installed out-of-the-box layouts/styling for waybar, hyprlock, and SwayNC. The best part? You can make your own!
-  - Credits to [iyiolacak](https://github.com/iyiolacak/iyiolacak-swaync-config?tab=readme-ov-file), [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf), and [mkhmtolzhas](https://github.com/mkhmtolzhas/mkhmtdots) for their amazing theming.
-  - Switch to Dark and Light Mode
-  - Select skins for Waybar, Rofi, Hyprlock, and SwayNC - Check [SKINS](SKINS.md)
-  - **Wallpaper Handling**
-    - Supports both online (yes, online.) and offline image (via `swww`) and video (via `mpvpaper`) formats.
-      - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU/RAM and GPU space.
-      - Paste image or video links with valid file extensions in the rofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
-    - Border colors and UI elements have dynamic color schemes.
+  - Credits to [iyiolacak](https://github.com/iyiolacak/iyiolacak-swaync-config?tab=readme-ov-file), [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf), and [mkhmtolzhas](https://github.com/mkhmtolzhas/mkhmtdots) for their amazing designs.
+  - Switch to Dark and Light contrast modes
+  - Dedicated Theming System:
+    - Select individual skins for Waybar, Rofi, Hyprlock, and SwayNC
+    - **Wallpaper Handling**
+      - Supports both online (yes, online.) and offline image (via `swww`) and video (via `mpvpaper`) formats.
+        - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU/RAM and GPU space.
+        - Paste image or video links with valid file extensions in the rofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
+      - Border colors and UI elements have dynamic color schemes.
+    - Make and select your own Themes that automatically apply skins and wallpapers.
+    - For more information, see [THEMING](THEMING.md)
 <br>
 
 ![Screenshot](showcase/image-5.png) 
