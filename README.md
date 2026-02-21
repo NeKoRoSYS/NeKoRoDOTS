@@ -231,7 +231,7 @@ Mostly personal notes just in case I switch over to another PC. Do NOT copy my G
 - Install [Hypremoji](https://github.com/Musagy/hypremoji)
 - Install `blueman` and `r-quick-share` for seamless bluetooth support. (Works with Apple Airpods and android phone)
 - Fix waybar tray disappearing after a certain amount of time by installing `sni-qt`.
-  Make sure you're not killing waybar using -SIGUSER2 when refreshing the config.
+  Make sure you're not killing waybar using -SIGUSER2 when refreshing the config. NeKoRoSHELL's waybar is a systemd service and not just an executable, reloads are handled via `systemctl`.
 <br>
 
 ## Star History
