@@ -237,4 +237,6 @@ Mostly personal notes just in case I switch over to another PC. Do NOT copy my G
 ## Star History
 <br>
 
+<div align="center">
 [![Star History Chart](https://api.star-history.com/svg?repos=nekorosys/nekoroshell&type=date&logscale&legend=top-left)](https://www.star-history.com/#nekorosys/nekoroshell&type=date&logscale&legend=top-left)
+</div>
