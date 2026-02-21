@@ -26,7 +26,6 @@ The best way to say "I use Linux btw 🤓" is if your desktop profile looks slee
 | 📌 **Table of Contents** |
 | :---: |
 | 🚀 [Features](#features) |
-| 🔨 [Skins and Layouts](#skins-and-layouts) |
 | 🔗 [Dependencies](#dependencies) |
 | 🤔 [Optional](#optional) |
 <br>
@@ -38,6 +37,7 @@ NeKoRoSHELL focuses on simplicity and modularity.
 
 The following are what NeKoRoSHELL currently offers:
 - **Distro-agnostic Installer Script**
+  - Use NeKoRoSHELL in any **supported** distro!
   - Use `git clone https://github.com/NeKoRoSYS/NeKoRoSHELL`
   - Then `cd NeKoRoSHELL`
   - and finally, `bash install.sh` to install the dotfiles.
@@ -63,24 +63,24 @@ The following are what NeKoRoSHELL currently offers:
   - Uses `SwayNC` for a dedicated notification center with customizable buttons and options.
  
 - **Smart Navbar**
-  - Uses bash script wrappers for `waybar` for the modes: Static, Dynamic, and Hover.
+  - Uses C++ wrappers for `waybar` to toggle visibility modes: Static, Dynamic, and Hover.
 <p align="center">
   <img src="https://github.com/NeKoRoSYS/NeKoRoSHELL/blob/main/showcase/navbar-modes.gif" alt="Navbar Demo" />
 </p>
 
 - **Advanced Customization - Make NeKoRoSHELL YOURS!**
   - NeKoRoSHELL is not just an identity, it is a framework. This repo gives you at most 2 pre-installed out-of-the-box layouts/styling for waybar, hyprlock, and SwayNC. The best part? You can make your own!
-  - Credits to [iyiolacak](https://github.com/iyiolacak/iyiolacak-swaync-config?tab=readme-ov-file), [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf), and [mkhmtolzhas](https://github.com/mkhmtolzhas/mkhmtdots) for their amazing theming.
-  - Switch to Dark and Light Mode
-  - Select Waybar Skins
-  - Select Rofi Skins
-  - Select Hyprlock Layouts
-  - Select SwayNC Styles
-  - **Wallpaper Handling**
-    - Supports both online (yes, online.) and offline image (via `swww`) and video (via `mpvpaper`) formats.
-      - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU, RAM, or GPU space.
-      - Paste image or video links with valid file extensions in the rofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
-    - Border colors and UI elements have dynamic color schemes.
+  - Credits to [iyiolacak](https://github.com/iyiolacak/iyiolacak-swaync-config?tab=readme-ov-file), [justinmdickey](https://github.com/justinmdickey/publicdots/blob/main/.config/hypr/hyprlock.conf), and [mkhmtolzhas](https://github.com/mkhmtolzhas/mkhmtdots) for their amazing designs.
+  - Switch to Dark and Light contrast modes
+  - Dedicated Theming System:
+    - Select individual skins for Waybar, Rofi, Hyprlock, and SwayNC
+    - **Wallpaper Handling**
+      - Supports both online and offline image (via `swww`) and video (via `mpvpaper`) formats.
+        - `mpvpaper` automatically stops if an app is on fullscreen mode to save CPU/RAM and GPU space.
+        - Paste image or video links with valid file extensions in the rofi prompt and the download will automatically be processed, saved, and set as your new wallpaper.
+      - Uses `wallust` to dynamically update border and UI colors based on the percieved colors of from the wallpaper.
+    - Make and select your own Themes that automatically apply skins and wallpapers.
+    - For more information, see [THEMING](THEMING.md)
 <br>
 
 ![Screenshot](showcase/image-5.png) 
@@ -119,27 +119,6 @@ NeKoRoSHELL is currently being developed by one person (*cough* [CONTRIBUTING](h
 
 NOTE: It is **unclear** what I'll have to do to properly execute a Quickshell integration for this repo. Maybe I'll only add widgets; or maybe I'll make an entirely new desktop environment on top of Hyprland, replacing waybar and swaync. Who knows? It doesn't matter for now so please take it with a grain of salt.
 
-<br>
-
-## Desktop Customization
-Make sure to analyze the directory structure of `~/.config/waybar/skins`, `~/.config/hypr/hyprlock/`, and `~/.config/hypr/swaync/`; and how the files (`hyprlock.conf`, `config.jsonc`, `colors.css`, `style.css`, `layout.jsonc`, `modules.jsonc`) include or import from each other. That way, you can easily create more options or looks to choose from!
-
-You have two options:
-- Install someone else's Waybar/Hyprlock setup and then manually adjust its files to correctly import or include; or
-- Make your own. ¯\_(ツ)_/¯
-<br>
-<br>
-
-![Screenshot](showcase/image-8.png) 
-<br>
-<br>
-<br>
-![Screenshot](showcase/image-7.png) 
-<br>
-<br>
-<br>
-![Screenshot](showcase/image-6.png) 
-<br>
 <br>
 
 ## Dependencies

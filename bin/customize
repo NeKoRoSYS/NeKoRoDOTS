@@ -16,7 +16,6 @@ OPTIONS="$theme\n$wallpaper\n$navbar\n$launcher\n$lockscreen\n$panel"
 if [ -n "$CMD_FEATURE" ]; then
     FEATURE="$CMD_FEATURE"
 else
-    # Your original Rofi selection logic
     CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -theme-str 'listview { lines: 6; scrollbar: false; }' -no-cache -p "Select Action")
     case "$CHOICE" in
 	"$theme")	FEATURE=theme ;;
@@ -38,7 +37,7 @@ case $FEATURE in
 	THEME_DIR="$HOME/.config/themes"
 	
 	if [ ! -n "$2" ]; then        
-	    makenotif customize preferences-desktop-theme Theme "Select a theme." true
+	    makenotif customize preferences-desktop-theme Themes "Select a theme." true
         fi
 
 	CHOICE=${CMD_CHOICE:-$(find "$THEME_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort | rofi -dmenu -p "Select Theme")}
@@ -48,7 +47,7 @@ case $FEATURE in
             
             if [ -n "$TARGET_SCRIPT" ]; then
 	        bash "$TARGET_SCRIPT"
-                makenotif customize preferences-desktop-theme Theme "Theme changed to: $CHOICE" true
+                makenotif themes preferences-desktop-theme Themes "Theme changed to: $CHOICE" true
             else
                 echo "Error: No .sh file found in $THEME_DIR/$CHOICE"
             fi
