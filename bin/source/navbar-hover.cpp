@@ -137,7 +137,11 @@ int main() {
     int cycle_count = 0;
 
     system("killall -q waybar");
-    std::this_thread::sleep_for(std::chrono::milliseconds(150));
+    
+    for (int i = 0; i < 40; ++i) { 
+        if (get_waybar_pid() <= 0) break;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
 
     pid_t pid = fork();
     if (pid == 0) {
@@ -166,7 +170,7 @@ int main() {
             cfg = read_config();
             monitors = get_monitors();
             
-	    if (current_waybar_pid > 0 && kill(current_waybar_pid, 0) != 0) {
+            if (current_waybar_pid > 0 && kill(current_waybar_pid, 0) != 0) {
                 pid_t new_pid = get_waybar_pid();
                 if (new_pid > 0) {
                     is_bar_visible = true;
