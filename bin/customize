@@ -16,7 +16,6 @@ OPTIONS="$theme\n$wallpaper\n$navbar\n$launcher\n$lockscreen\n$panel"
 if [ -n "$CMD_FEATURE" ]; then
     FEATURE="$CMD_FEATURE"
 else
-    # Your original Rofi selection logic
     CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -theme-str 'listview { lines: 6; scrollbar: false; }' -no-cache -p "Select Action")
     case "$CHOICE" in
 	"$theme")	FEATURE=theme ;;
