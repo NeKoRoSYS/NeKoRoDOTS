@@ -86,7 +86,12 @@ if [[ "$INSTALL_TYPE" == "compilation" ]]; then
             fi
             
             if [[ -f "packages/pkglist-arch.txt" ]]; then
-                $AUR_HELPER -S --needed --noconfirm - < packages/pkglist-arch.txt
+                while read -r pkg; do
+                    [[ -z "$pkg" || "$pkg" == \#* ]] && continue
+    
+                    echo -e "${BLUE}Installing $pkg...${NC}"
+                    $AUR_HELPER -S --needed --noconfirm "$pkg" || echo -e "${RED}Failed to install $pkg. Skipping...${NC}"
+                done < packages/pkglist-arch.txt
             else
                 echo -e "${RED}Warning: packages/pkglist-arch.txt not found!${NC}"
             fi
