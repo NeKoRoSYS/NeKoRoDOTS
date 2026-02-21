@@ -18,12 +18,32 @@ Depending on the package, the relevant files that make the Skins system work may
   - `config.rasi` imports from the active skin.
 <br>
 
+### Making a Skin
+
 The directory structure of Skins are always `.config/PACKAGE/skins/SKIN/CONTENT`.
 
 You usually have two options when making a Skin:
 - Install someone else's packge design/setup and then manually adjust its files to follow the directory and file organization schematics; or
 - Make your own. This page won't teach you how to actually make and modify files, please read the documentation for the packages you want to make a skin for. ¯\_(ツ)_/¯
   - You don't have to, but you can make sure it supports the Dark and Light contrast modes by importing from wallust: `/home/username/.cache/wallust/your-wallust-colors.extension`
+
+waybar, rofi, and SwayNC Skins lets you dynamically configure hyprland `layerrule`(s).
+  - Each of them has a `layerrule.conf` file.
+  - These `layerrule.conf` files are then imported to `.config/hypr/configs/windowrules.conf` (usually found at the bottom).
+ 
+### Making a Theme
+
+Themes are found in `.config/themes`
+
+To make a theme:
+1. Make a folder and name it as you please.
+2. Inside the folder, create a bash script.
+3. In the bash script, type the following:
+   ```bash
+   quick-theme WALLPAPER_SKIN NAVBAR_SKIN LAUNCHER_SKIN LOCKSCREEN_SKIN PANEL_SKIN
+   ```
+   - `*_SKIN` are placeholders and should be replaced by actual names (case-sensitive).
+   - You can even add extra logic or even triggers since it's a bash script.
 <br>
 <br>
 
