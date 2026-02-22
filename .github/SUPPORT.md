@@ -8,8 +8,7 @@
    
    For a quick sanity check, do the following in order:
    - Assuming you've just installed NeKoRoSHELL and you're still in the cloned folder, do `cd` to return to $HOME (or just open another terminal).
-   - Type `chmod +x $HOME/bin/*` and/or `chmod +x $HOME/.local/bin/*` and then press enter. This will allow the scripts used in the custom hyprland keybinds to be ran by your keyboard.
-   - Run `source $HOME/.bashrc` in the terminal, assuming that the PATH variables from the repo has been appended upon prior installation.
+   - Verify script permissions by typing `chmod +x $HOME/bin/*` and/or `chmod +x $HOME/.local/bin/*` then press Enter. This will allow the scripts used in the custom hyprland keybinds to be ran by your keyboard.
    If that didn't work, make sure the `environment` config file in `.config/hypr/configs/` has this line:
    ```bash
    env = PATH,$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH
