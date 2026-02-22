@@ -260,6 +260,7 @@ for conf in "${CONFIGS[@]}"; do
     fi
 done
 
+
 echo -e "${BLUE}Finalizing directory structure...${NC}"
 mkdir -p "$HOME/.config"
 
@@ -334,20 +335,15 @@ inject_shell_config() {
     fi
     
     local export_bin_dir="${USER_BIN_DIR/$HOME/\$HOME}"
-
-    touch "$shell_rc" 
-
-    sed -i '/# --- NeKoRoSHELL START ---/,/# --- NeKoRoSHELL END ---/d' "$shell_rc"
-    echo -e "\n# --- NeKoRoSHELL START ---" >> "$shell_rc"
     
-    if [[ -f "$source_rc" ]]; then
-        cat "$source_rc" >> "$shell_rc"
-        echo "" >> "$shell_rc" 
+    if [[ -f "$shell_rc" ]]; then
+        sed -i '/# --- NeKoRoSHELL START ---/,/# --- NeKoRoSHELL END ---/d' "$shell_rc"
+        echo -e "\n# --- NeKoRoSHELL START ---" >> "$shell_rc"
+        [[ -f "$source_rc" ]] && cat "$source_rc" >> "$shell_rc"
+        echo "export PATH=\"$export_bin_dir:\$HOME/.cargo/bin:$go_bin_path:\$PATH\"" >> "$shell_rc"
+        echo -e "# --- NeKoRoSHELL END ---" >> "$shell_rc"
+        echo -e "${GREEN}Updated $shell_rc${NC}"
     fi
-    
-    echo "export PATH=\"$export_bin_dir:\$HOME/.cargo/bin:$go_bin_path:\$PATH\"" >> "$shell_rc"
-    echo -e "# --- NeKoRoSHELL END ---" >> "$shell_rc"
-    echo -e "${GREEN}Updated $shell_rc${NC}"
 }
 
 inject_shell_config "$HOME/.bashrc" ".bashrc"
