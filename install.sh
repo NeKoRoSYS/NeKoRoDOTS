@@ -413,9 +413,12 @@ fi
 
 echo -e "${BLUE}Setting script permissions...${NC}"
 find "$HOME/.config/" -type f -name "*.sh" -exec chmod +x {} + 2>/dev/null
-if [[ -d "$USER_BIN_DIR" ]]; then
-    find "$USER_BIN_DIR/" -type f -exec chmod +x {} + 2>/dev/null
-fi
+
+for bin_dir in "$HOME/.local/bin" "$HOME/bin"; do
+    if [[ -d "$bin_dir" ]]; then
+        find "$bin_dir/" -type f -exec chmod +x {} + 2>/dev/null
+    fi
+done
 
 if command -v systemctl >/dev/null 2>&1; then
     echo -e "${BLUE}Enabling Wayland services...${NC}"
