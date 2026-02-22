@@ -23,11 +23,15 @@ The best way to say "I use Linux btw 🤓" is if your desktop profile looks slee
 <br>
 <br>
 
+<div align="center">
+ 
 | 📌 **Table of Contents** |
 | :---: |
 | 🚀 [Features](#features) |
 | 🔗 [Dependencies](#dependencies) |
 | 🤔 [Optional](#optional) |
+
+</div>
 <br>
 
 ## [Features](CHANGELOG.md)
