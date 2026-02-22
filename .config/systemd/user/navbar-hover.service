@@ -4,7 +4,7 @@ After=hyprland-session.target
 Wants=hyprland-session.target
 
 [Service]
-ExecStart=%h/bin/navbar-hover
+ExecStart=/bin/bash -c 'PATH="$HOME/.local/bin/nekoroshell:$HOME/bin/nekoroshell:$PATH" exec navbar-hover'
 ExecStop=/usr/bin/killall waybar
 Restart=always
 RestartSec=1
