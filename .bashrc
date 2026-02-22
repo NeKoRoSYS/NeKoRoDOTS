@@ -9,5 +9,5 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.local/bin/nekoroshell$HOME/bin/nekoroshell:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share
